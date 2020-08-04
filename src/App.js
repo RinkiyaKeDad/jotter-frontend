@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Grid, TextField } from '@material-ui/core';
+import YouTube from 'react-youtube';
 
 function App() {
+  const [videoLink, setVideoLink] = useState('');
+  const [videoTimestamp, setVideoTimestamp] = useState(0);
+
+  const onChange = e => {
+    setVideoLink(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const getVideoId = () => {
+    if (videoLink === '' || videoLink === undefined) return '';
+    // www.youtube.com/watch?v=ID&...
+    let splitVideoLink = videoLink.split('v=')[1];
+    let ampersandLocation = splitVideoLink.indexOf('&');
+    if (ampersandLocation !== -1) {
+      return splitVideoLink.substring(0, ampersandLocation);
+    }
+    return splitVideoLink;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container direction='column' justify='center' alignItems='center'>
+      <Grid item xs={12}>
+        <TextField
+          value={videoLink}
+          name='videoLink'
+          placeholder='Enter a YouTube URL'
+          variant='outlined'
+          onChange={e => onChange(e)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <YouTube
+          videoId={getVideoId()}
+          opts={{
+            width: '100%',
+            playerVars: {
+              start: parseInt(videoTimestamp),
+            },
+          }}
+        />
+      </Grid>
+    </Grid>
   );
 }
 
