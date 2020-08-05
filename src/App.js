@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import theme from './components/layout/theme';
-import UserContext from './context/UserContext';
+import UserContext from './components/context/UserContext';
 import Header from './components/layout/Header';
 import Home from './components/pages/Home';
 import Login from './components/auth/Login';
@@ -26,7 +26,7 @@ function App() {
 
   const [userData, setUserData] = useState({
     token: undefined,
-    username: undefined,
+    user: undefined,
   });
 
   useEffect(() => {
@@ -38,20 +38,20 @@ function App() {
         token = '';
       }
       const tokenRes = await Axios.post(
-        process.env.REACT_APP_BACKEND_URL + '/users/tokenIsValid',
+        process.env.REACT_APP_BACKEND_URL + '/auth/tokenIsValid',
         null,
         { headers: { 'x-auth-token': token } }
       );
       if (tokenRes.data) {
         const userRes = await Axios.get(
-          process.env.REACT_APP_BACKEND_URL + '/users/',
+          process.env.REACT_APP_BACKEND_URL + '/auth/',
           {
             headers: { 'x-auth-token': token },
           }
         );
         setUserData({
           token,
-          username: userRes.data,
+          user: userRes.data,
         });
       }
     };
@@ -75,7 +75,6 @@ function App() {
                     <Route path='/' component={Home} exact />
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
-                    <Route path='/cap' component={CreatePun} />
                   </Switch>
                 </Grid>
                 <Grid item xs={1} sm={2} />

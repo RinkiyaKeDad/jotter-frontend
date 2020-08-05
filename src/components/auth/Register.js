@@ -7,7 +7,6 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +14,7 @@ import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -43,10 +42,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Register() {
   const classes = useStyles();
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
-  const [displayName, setDisplayName] = useState();
   const [error, setError] = useState(undefined);
 
   const { setUserData } = useContext(UserContext);
@@ -58,22 +56,21 @@ export default function Register() {
     }
 
     setError(undefined);
-    //setOpen(false);
   };
 
   const submit = async e => {
     e.preventDefault();
 
     try {
-      const newUser = { email, password, passwordCheck, displayName };
+      const newUser = { username, password, passwordCheck };
       await Axios.post(
-        process.env.REACT_APP_BACKEND_URL + '/users/register',
+        process.env.REACT_APP_BACKEND_URL + '/auth/register',
         newUser
       );
       const loginRes = await Axios.post(
-        process.env.REACT_APP_BACKEND_URL + '/users/login',
+        process.env.REACT_APP_BACKEND_URL + '/auth/login',
         {
-          email,
+          username,
           password,
         }
       );
@@ -84,7 +81,8 @@ export default function Register() {
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/');
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
+      console.log(err);
+      //err.response.data.msg && setError(err.response.data.msg);
     }
   };
 
@@ -102,28 +100,14 @@ export default function Register() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete='fname'
-                name='firstName'
                 variant='outlined'
                 required
                 fullWidth
-                id='firstName'
-                label='User Name'
-                autoFocus
-                onChange={e => setDisplayName(e.target.value)}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-                onChange={e => setEmail(e.target.value)}
+                id='username'
+                label='Username'
+                name='username'
+                autoComplete='username'
+                onChange={e => setUsername(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>

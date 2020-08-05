@@ -1,18 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 import Axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Login() {
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState(undefined);
 
@@ -57,15 +54,14 @@ export default function Login() {
     }
 
     setError(undefined);
-    //setOpen(false);
   };
 
   const submit = async e => {
     e.preventDefault();
     try {
-      const loginUser = { email, password };
+      const loginUser = { username, password };
       const loginRes = await Axios.post(
-        process.env.REACT_APP_BACKEND_URL + '/users/login',
+        process.env.REACT_APP_BACKEND_URL + '/auth/login',
         loginUser
       );
       setUserData({
@@ -95,12 +91,12 @@ export default function Login() {
             margin='normal'
             required
             fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
+            id='username'
+            label='Username'
+            name='username'
+            autoComplete='username'
             autoFocus
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
           />
           <TextField
             variant='outlined'

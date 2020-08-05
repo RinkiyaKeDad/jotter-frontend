@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 
 export default function Authoptions() {
   const { userData, setUserData } = useContext(UserContext);
@@ -10,7 +10,6 @@ export default function Authoptions() {
   const history = useHistory();
   const register = () => history.push('/register');
   const login = () => history.push('/login');
-  const createPun = () => history.push('/cap');
 
   const logout = () => {
     setUserData({
@@ -23,9 +22,6 @@ export default function Authoptions() {
     <div>
       {userData.user ? (
         <>
-          <Button color='secondary' onClick={createPun}>
-            Create
-          </Button>
           <Button color='secondary' onClick={logout}>
             Log out
           </Button>
