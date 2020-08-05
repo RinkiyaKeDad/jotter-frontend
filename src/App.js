@@ -1,50 +1,90 @@
-import React, { useState } from 'react';
-import { Grid, TextField } from '@material-ui/core';
-import YouTube from 'react-youtube';
+import React, { useState, useEffect } from 'react';
+import { Grid } from '@material-ui/core';
+import Axios from 'axios';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+import theme from './components/layout/theme';
+import UserContext from './context/UserContext';
+import Header from './components/layout/Header';
+import Home from './components/pages/Home';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+
+const useStyles = makeStyles({
+  verticalMargin: {
+    marginTop: '2rem',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '2rem',
+    },
+  },
+});
 
 function App() {
-  const [videoLink, setVideoLink] = useState('');
-  const [videoTimestamp, setVideoTimestamp] = useState(0);
+  const classes = useStyles();
 
-  const onChange = e => {
-    setVideoLink(e.target.value);
-    console.log(e.target.value);
-  };
+  const [userData, setUserData] = useState({
+    token: undefined,
+    username: undefined,
+  });
 
-  const getVideoId = () => {
-    if (videoLink === '' || videoLink === undefined) return '';
-    // www.youtube.com/watch?v=ID&...
-    let splitVideoLink = videoLink.split('v=')[1];
-    let ampersandLocation = splitVideoLink.indexOf('&');
-    if (ampersandLocation !== -1) {
-      return splitVideoLink.substring(0, ampersandLocation);
-    }
-    return splitVideoLink;
-  };
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem('auth-token');
+
+      if (token === null) {
+        localStorage.setItem('auth-token', '');
+        token = '';
+      }
+      const tokenRes = await Axios.post(
+        process.env.REACT_APP_BACKEND_URL + '/users/tokenIsValid',
+        null,
+        { headers: { 'x-auth-token': token } }
+      );
+      if (tokenRes.data) {
+        const userRes = await Axios.get(
+          process.env.REACT_APP_BACKEND_URL + '/users/',
+          {
+            headers: { 'x-auth-token': token },
+          }
+        );
+        setUserData({
+          token,
+          username: userRes.data,
+        });
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
 
   return (
-    <Grid container direction='column' justify='center' alignItems='center'>
-      <Grid item xs={12}>
-        <TextField
-          value={videoLink}
-          name='videoLink'
-          placeholder='Enter a YouTube URL'
-          variant='outlined'
-          onChange={e => onChange(e)}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <YouTube
-          videoId={getVideoId()}
-          opts={{
-            width: '100%',
-            playerVars: {
-              start: parseInt(videoTimestamp),
-            },
-          }}
-        />
-      </Grid>
-    </Grid>
+    <>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <UserContext.Provider value={{ userData, setUserData }}>
+            <Grid container direction='column'>
+              <Grid item>
+                <Header />
+              </Grid>
+              <Grid item container className={classes.verticalMargin}>
+                <Grid item xs={1} sm={2} />
+                <Grid item xs={10} sm={8}>
+                  <Switch>
+                    <Route path='/' component={Home} exact />
+                    <Route path='/login' component={Login} />
+                    <Route path='/register' component={Register} />
+                    <Route path='/cap' component={CreatePun} />
+                  </Switch>
+                </Grid>
+                <Grid item xs={1} sm={2} />
+              </Grid>
+            </Grid>
+          </UserContext.Provider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </>
   );
 }
 
