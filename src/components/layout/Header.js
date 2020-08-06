@@ -22,7 +22,7 @@ export default function Header() {
           to='/'
         >
           <Typography color='secondary' variant='h4'>
-            PunDit
+            Jotter
           </Typography>
         </Link>
 
