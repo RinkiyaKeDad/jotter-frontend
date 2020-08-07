@@ -4,12 +4,15 @@ import { useParams } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import Axios from 'axios';
 import YouTube from 'react-youtube';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 export default function Jotting() {
   const { userData } = useContext(UserContext);
 
   const id = useParams().id;
   const [note, setNote] = useState([]);
+  const [text, setText] = useState('');
   useEffect(() => {
     const fetchNote = async () => {
       try {
@@ -22,6 +25,7 @@ export default function Jotting() {
           }
         );
         console.log(response.data);
+        setText(response.data.body.text);
         setNote(response.data);
       } catch (err) {
         console.log(err);
@@ -41,6 +45,23 @@ export default function Jotting() {
     return splitVideoLink;
   };
 
+  const saveNote = async e => {
+    e.preventDefault();
+    const saveRes = await Axios.patch(
+      process.env.REACT_APP_BACKEND_URL + `/notes/${id}`,
+      {
+        body: {
+          text,
+        },
+      },
+      {
+        headers: {
+          'x-auth-token': userData.token,
+        },
+      }
+    );
+  };
+
   return (
     <div>
       <YouTube
@@ -52,6 +73,19 @@ export default function Jotting() {
           },
         }}
       />
+      <form noValidate autoComplete='off' onSubmit={saveNote}>
+        <TextField
+          id='outlined-multiline-static'
+          multiline
+          rows={4}
+          defaultValue={text}
+          variant='outlined'
+          onChange={e => setText(e.target.value)}
+        />
+        <Button variant='contained' color='primary' onClick={saveNote}>
+          Primary
+        </Button>
+      </form>
     </div>
   );
 }
