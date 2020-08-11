@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom';
 
 import AuthOptions from '../auth/AuthOptions';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   typographyStyles: {
     flex: 1,
+  },
+  header: {
+    color: theme.palette.primary.main,
   },
 }));
 
