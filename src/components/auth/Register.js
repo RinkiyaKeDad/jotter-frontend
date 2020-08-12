@@ -142,7 +142,7 @@ export default function Register() {
             type='submit'
             fullWidth
             variant='contained'
-            color='primary'
+            color='secondary'
             className={classes.submit}
             onClick={submit}
           >

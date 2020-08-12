@@ -10,14 +10,15 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
   },
   header: {
-    color: theme.palette.primary.main,
+    //backgroundColor: theme.palette.info.main,
+    color: 'white',
   },
 }));
 
 export default function Header() {
   const classes = useStyles();
   return (
-    <AppBar color='primary' position='static'>
+    <AppBar className={classes.header} position='static'>
       <Toolbar>
         <Link
           style={{ textDecoration: 'none' }}

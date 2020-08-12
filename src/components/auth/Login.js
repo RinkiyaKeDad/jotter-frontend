@@ -115,12 +115,12 @@ export default function Login() {
             type='submit'
             fullWidth
             variant='contained'
-            color='primary'
+            color='secondary'
             className={classes.submit}
           >
             Login
           </Button>
-          <Grid container>
+          <Grid container justify='flex-end'>
             <Grid item>
               <Link href='/register' variant='body2'>
                 {"Don't have an account? Register"}
