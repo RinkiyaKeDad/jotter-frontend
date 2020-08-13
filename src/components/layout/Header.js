@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
   },
   header: {
-    //backgroundColor: theme.palette.info.main,
     color: 'white',
   },
 }));

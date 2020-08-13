@@ -105,8 +105,8 @@ export default function Login() {
         <form className={classes.form} noValidate onSubmit={submit}>
           <TextField
             id='outlined-textarea'
-            label='Create A Note'
-            placeholder='Put Your Note Title Here!'
+            label='Note Title'
+            placeholder='Enter note title'
             multiline
             variant='outlined'
             onChange={e => setContent(e.target.value)}
@@ -114,8 +114,9 @@ export default function Login() {
           />
           <TextField
             id='outlined-textarea'
-            label='Create A URL'
-            placeholder='Put Your Amazing URL Here!'
+            label='Video Link'
+            placeholder='Paste the video link'
+            style={{ marginTop: '3%' }}
             multiline
             variant='outlined'
             onChange={e => setLink(e.target.value)}
@@ -126,7 +127,7 @@ export default function Login() {
             type='submit'
             fullWidth
             variant='contained'
-            color='primary'
+            color='secondary'
             className={classes.submit}
           >
             Create

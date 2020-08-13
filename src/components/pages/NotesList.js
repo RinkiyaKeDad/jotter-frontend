@@ -2,9 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/styles';
 
 import UserContext from '../context/UserContext';
 import { Button } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+  typographyStyles: {
+    flex: 1,
+  },
+  header: {
+    color: 'white',
+  },
+}));
 
 export default function NotesList() {
   const { userData } = useContext(UserContext);
