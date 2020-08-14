@@ -7,7 +7,26 @@ import YouTube from 'react-youtube';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import theme from '../layout/theme';
+
+const useStyles = makeStyles({
+  verticalMargin: {
+    marginTop: '2rem',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '2rem',
+    },
+  },
+  notesArea: {
+    width: '100%',
+  },
+  buttonPos: {
+    marginTop: '2%',
+  },
+});
+
 export default function Jotting() {
+  const classes = useStyles();
+
   const { userData } = useContext(UserContext);
 
   const id = useParams().id;
@@ -63,29 +82,36 @@ export default function Jotting() {
   };
 
   return (
-    <div>
-      <YouTube
-        videoId={getVideoId()}
-        opts={{
-          width: '100%',
-          playerVars: {
-            start: parseInt(note.videoTimestamp),
-          },
-        }}
-      />
-      <form noValidate autoComplete='off' onSubmit={saveNote}>
-        <TextField
-          id='outlined-multiline-static'
-          multiline
-          rows={4}
-          defaultValue={text}
-          variant='outlined'
-          onChange={e => setText(e.target.value)}
+    <Grid container spacing={4}>
+      <Grid item xs={12} sm={6}>
+        <YouTube
+          videoId={getVideoId()}
+          opts={{
+            width: '100%',
+            playerVars: {
+              start: parseInt(note.videoTimestamp),
+            },
+          }}
         />
-        <Button variant='contained' color='primary' onClick={saveNote}>
-          Primary
-        </Button>
-      </form>
-    </div>
+      </Grid>
+      <Grid item container xs={12} sm={6}>
+        <Grid item xs={12}>
+          <TextField
+            id='outlined-multiline-static'
+            multiline
+            defaultValue={text}
+            rows={17}
+            variant='outlined'
+            fullWidth={true}
+            onChange={e => setText(e.target.value)}
+          />
+        </Grid>
+        <Grid className={classes.buttonPos} item xs={12}>
+          <Button variant='contained' color='secondary' onClick={saveNote}>
+            Save
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
