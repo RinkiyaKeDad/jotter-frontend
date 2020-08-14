@@ -1,8 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+
 import { makeStyles } from '@material-ui/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import UserContext from '../context/UserContext';
 import { Button } from '@material-ui/core';
@@ -19,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 export default function NotesList() {
   const { userData } = useContext(UserContext);
   const [notes, setNotes] = useState([]);
+  const history = useHistory();
 
   console.log(`token is ${userData.token}`);
 
@@ -63,17 +69,20 @@ export default function NotesList() {
 
   return (
     <div>
-      {notes &&
-        notes.map((note, index) => (
-          <h1>
-            <Link to={`/note/${note._id}/`} style={{ textDecoration: 'none' }}>
-              {note.title}
-            </Link>
-            <Button onClick={() => deleteNote(note._id)}>
-              <DeleteIcon />
-            </Button>
-          </h1>
-        ))}
+      <Typography variant='h1' component='h2' gutterBottom>
+        Your Notes
+      </Typography>
+      <List component='nav' aria-label='contacts'>
+        {notes &&
+          notes.map((note, index) => (
+            <ListItem button onClick={() => history.push(`/note/${note._id}/`)}>
+              <ListItemText primary={note.title} />
+              <Button onClick={() => deleteNote(note._id)}>
+                <DeleteIcon />
+              </Button>
+            </ListItem>
+          ))}
+      </List>
     </div>
   );
 }
