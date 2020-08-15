@@ -61,6 +61,28 @@ function App() {
 
     checkLoggedIn();
   }, []);
+  let routes;
+
+  if (userData.token) {
+    routes = (
+      <Switch>
+        <Route path='/' component={Login} exact />
+        <Route path='/login' component={Login} />
+        <Route path='/register' component={Register} />
+        <Route path='/notes' component={NotesList} />
+        <Route path='/note/:id' component={Jotting} />
+        <Route path='/create' component={CreateNote} />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path='/' component={Login} exact />
+        <Route path='/login' component={Login} />
+        <Route path='/register' component={Register} />
+      </Switch>
+    );
+  }
 
   return (
     <>
@@ -74,14 +96,7 @@ function App() {
               <Grid item container className={classes.verticalMargin}>
                 <Grid item xs={1} sm={2} />
                 <Grid item xs={10} sm={8}>
-                  <Switch>
-                    <Route path='/' component={Home} exact />
-                    <Route path='/login' component={Login} />
-                    <Route path='/register' component={Register} />
-                    <Route path='/notes' component={NotesList} />
-                    <Route path='/note/:id' component={Jotting} />
-                    <Route path='/create' component={CreateNote} />
-                  </Switch>
+                  {routes}
                 </Grid>
                 <Grid item xs={1} sm={2} />
               </Grid>

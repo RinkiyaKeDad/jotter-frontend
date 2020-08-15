@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
-import Axios from 'axios';
+import Typography from '@material-ui/core/Typography';
 
 export default function Home() {
   return (
-    <Grid container spacing={4}>
-      Home Page
+    <Grid container>
+      <Grid item xs={12}>
+        <Typography variant='h1' component='h2' gutterBottom>
+          Jotter - Take notes while browsing YouTube!
+        </Typography>
+      </Grid>
     </Grid>
   );
 }
