@@ -6,6 +6,7 @@ import Axios from 'axios';
 import YouTube from 'react-youtube';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import theme from '../layout/theme';
 
@@ -83,6 +84,11 @@ export default function Jotting() {
 
   return (
     <Grid container spacing={4}>
+      <Grid item xs={12}>
+        <Typography variant='h1' component='h2' gutterBottom>
+          {note.title}
+        </Typography>
+      </Grid>
       <Grid item xs={12} sm={6}>
         <YouTube
           videoId={getVideoId()}
