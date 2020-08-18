@@ -10,6 +10,7 @@ export default function Authoptions() {
   const history = useHistory();
   const register = () => history.push('/register');
   const login = () => history.push('/login');
+  const create = () => history.push('/create');
 
   const logout = () => {
     setUserData({
@@ -22,6 +23,9 @@ export default function Authoptions() {
     <div>
       {userData.user ? (
         <>
+          <Button color='secondary' onClick={create}>
+            Create
+          </Button>
           <Button color='secondary' onClick={logout}>
             Log out
           </Button>

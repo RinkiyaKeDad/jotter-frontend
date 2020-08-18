@@ -66,7 +66,7 @@ function App() {
   if (userData.token) {
     routes = (
       <Switch>
-        <Route path='/' component={Login} exact />
+        <Route path='/' component={NotesList} exact />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
         <Route path='/notes' component={NotesList} />
