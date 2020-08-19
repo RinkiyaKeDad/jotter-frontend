@@ -106,7 +106,7 @@ export default function Register() {
                 label='Username'
                 name='username'
                 autoComplete='username'
-                onChange={e => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value.trim())}
               />
             </Grid>
             <Grid item xs={12}>
@@ -119,7 +119,7 @@ export default function Register() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
-                onChange={e => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value.trim())}
               />
             </Grid>
             <Grid item xs={12}>
@@ -132,7 +132,7 @@ export default function Register() {
                 type='password'
                 id='repassword'
                 autoComplete='current-repassword'
-                onChange={e => setPasswordCheck(e.target.value)}
+                onChange={e => setPasswordCheck(e.target.value.trim())}
               />
             </Grid>
             <Grid item xs={12}></Grid>

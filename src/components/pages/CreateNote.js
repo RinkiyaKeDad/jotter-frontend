@@ -105,7 +105,7 @@ export default function Login() {
             placeholder='Enter note title'
             multiline
             variant='outlined'
-            onChange={e => setContent(e.target.value)}
+            onChange={e => setContent(e.target.value.trim())}
             className={classes.textBoxWidth}
           />
           <TextField
@@ -115,7 +115,7 @@ export default function Login() {
             style={{ marginTop: '3%' }}
             multiline
             variant='outlined'
-            onChange={e => setLink(e.target.value)}
+            onChange={e => setLink(e.target.value.trim())}
             className={classes.textBoxWidth}
           />
 

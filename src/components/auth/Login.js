@@ -70,6 +70,9 @@ export default function Login() {
   const submit = async e => {
     e.preventDefault();
     try {
+      username = username.trim();
+      password = password.trim();
+
       const loginUser = { username, password };
       const loginRes = await Axios.post(
         process.env.REACT_APP_BACKEND_URL + '/auth/login',
@@ -107,7 +110,7 @@ export default function Login() {
             name='username'
             autoComplete='username'
             autoFocus
-            onChange={e => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value.trim())}
           />
           <TextField
             variant='outlined'
@@ -119,7 +122,7 @@ export default function Login() {
             type='password'
             id='password'
             autoComplete='current-password'
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value.trim())}
           />
 
           <Button
