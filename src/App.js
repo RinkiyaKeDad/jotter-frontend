@@ -34,10 +34,10 @@ function App() {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      let token = localStorage.getItem('auth-token');
+      let token = sessionStorage.getItem('auth-token');
 
       if (token === null) {
-        localStorage.setItem('auth-token', '');
+        sessionStorage.setItem('auth-token', '');
         token = '';
       }
       const tokenRes = await Axios.post(
@@ -83,10 +83,6 @@ function App() {
       </Switch>
     );
   }
-
-  window.onunload = function () {
-    localStorage.clear();
-  };
 
   return (
     <>

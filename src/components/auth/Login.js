@@ -79,7 +79,7 @@ export default function Login() {
         token: loginRes.data.token,
         user: loginRes.data.user,
       });
-      localStorage.setItem('auth-token', loginRes.data.token);
+      sessionStorage.setItem('auth-token', loginRes.data.token);
       history.push('/');
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
