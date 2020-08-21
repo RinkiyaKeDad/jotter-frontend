@@ -8,7 +8,6 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Shimmer from 'react-shimmer-effect';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -23,22 +22,6 @@ const useStyles = makeStyles(theme => ({
   header: {
     color: 'white',
   },
-  line: {
-    width: '96px',
-    height: '8px',
-    alignSelf: 'center',
-    marginLeft: '16px',
-    borderRadius: '8px',
-  },
-  container: {
-    border: '0px solid rgba(255, 255, 255, 1)',
-    boxShadow: '0px 0px 20px rgba(0, 0, 0, .1)',
-    borderRadius: '4px',
-    backgroundColor: 'white',
-    display: 'flex',
-    padding: '16px',
-    width: '200px',
-  },
 }));
 
 function Alert(props) {
@@ -50,7 +33,6 @@ export default function NotesList() {
   const { userData } = useContext(UserContext);
   const [notes, setNotes] = useState([]);
   const [notif, setNotif] = useState(undefined);
-  const [loading, setLoading] = useState(true);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -65,7 +47,6 @@ export default function NotesList() {
   console.log(`token is ${userData.token}`);
 
   useEffect(() => {
-    setLoading(true);
     const fetchAllNotes = async () => {
       try {
         const response = await Axios.get(
@@ -78,7 +59,6 @@ export default function NotesList() {
         );
         console.log(response.data);
         setNotes(response.data);
-        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -111,17 +91,14 @@ export default function NotesList() {
       <Typography variant='h1' component='h2' gutterBottom>
         Your Notes
       </Typography>
-      {loading && (
-        <div className={classes.container}>
-          <Shimmer>
-            <div className={classes.line} />
-          </Shimmer>
-        </div>
-      )}
       <List component='nav' aria-label='contacts'>
         {notes &&
           notes.map((note, index) => (
-            <ListItem button onClick={() => history.push(`/note/${note._id}/`)}>
+            <ListItem
+              key={index}
+              button
+              onClick={() => history.push(`/note/${note._id}/`)}
+            >
               <ListItemText primary={note.title} />
               <ListItemSecondaryAction>
                 <Button onClick={() => deleteNote(note._id)}>
