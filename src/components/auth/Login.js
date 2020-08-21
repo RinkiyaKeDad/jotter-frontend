@@ -70,9 +70,6 @@ export default function Login() {
   const submit = async e => {
     e.preventDefault();
     try {
-      username = username.trim();
-      password = password.trim();
-
       const loginUser = { username, password };
       const loginRes = await Axios.post(
         process.env.REACT_APP_BACKEND_URL + '/auth/login',

@@ -84,6 +84,10 @@ function App() {
     );
   }
 
+  window.onunload = function () {
+    localStorage.clear();
+  };
+
   return (
     <>
       <ThemeProvider theme={theme}>
