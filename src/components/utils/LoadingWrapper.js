@@ -1,5 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function LoadingWrapper() {
-  return <div></div>;
-}
+export default LoadingWrapper = (WrappedComponent, loadingMessage) => {
+  const HOC = props => {
+    const [isLoading, setLoading] = useState(true);
+    const setLoadingState = isComponentLoading => {
+      setLoading(isComponentLoading);
+    };
+
+    return (
+      <>
+        {isLoading && <div style={{ color: 'red' }}>{loadingMessage}</div>}
+        <WrappedComponent {...props} setLoading={setLoadingState} />
+      </>
+    );
+  };
+
+  return HOC;
+};
