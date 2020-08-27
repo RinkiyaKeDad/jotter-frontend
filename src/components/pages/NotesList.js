@@ -13,6 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import UserContext from '../context/UserContext';
+import LoadingWrapper from '../utils/LoadingWrapper';
 import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -28,11 +29,12 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
-export default function NotesList() {
+export const NotesList = props => {
   const classes = useStyles();
   const { userData } = useContext(UserContext);
   const [notes, setNotes] = useState([]);
   const [notif, setNotif] = useState(undefined);
+  const { setLoading } = props;
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -48,6 +50,7 @@ export default function NotesList() {
 
   useEffect(() => {
     const fetchAllNotes = async () => {
+      setLoading(true);
       try {
         const response = await Axios.get(
           process.env.REACT_APP_BACKEND_URL + `/notes`,
@@ -62,6 +65,7 @@ export default function NotesList() {
       } catch (err) {
         console.log(err);
       }
+      setLoading(false);
     };
     fetchAllNotes();
   }, [userData]);
@@ -115,4 +119,6 @@ export default function NotesList() {
       </Snackbar>
     </div>
   );
-}
+};
+
+export default LoadingWrapper(NotesList, 'Loading List...');

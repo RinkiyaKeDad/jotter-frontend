@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default LoadingWrapper = (WrappedComponent, loadingMessage) => {
+export const LoadingWrapper = (WrappedComponent, loadingMessage) => {
   const HOC = props => {
     const [isLoading, setLoading] = useState(true);
     const setLoadingState = isComponentLoading => {
@@ -9,7 +9,11 @@ export default LoadingWrapper = (WrappedComponent, loadingMessage) => {
 
     return (
       <>
-        {isLoading && <div style={{ color: 'red' }}>{loadingMessage}</div>}
+        {isLoading && (
+          <div style={{ backgroundColor: 'blue', color: 'red' }}>
+            {loadingMessage}
+          </div>
+        )}
         <WrappedComponent {...props} setLoading={setLoadingState} />
       </>
     );
@@ -17,3 +21,5 @@ export default LoadingWrapper = (WrappedComponent, loadingMessage) => {
 
   return HOC;
 };
+
+export default LoadingWrapper;
