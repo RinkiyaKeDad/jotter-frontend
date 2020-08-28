@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import theme from '../layout/theme';
+import LoadingWrapper from '../utils/LoadingWrapper';
 
 const useStyles = makeStyles({
   verticalMargin: {
@@ -25,16 +26,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Jotting() {
+export const Jotting = props => {
   const classes = useStyles();
 
   const { userData } = useContext(UserContext);
+  const { setLoading } = props;
 
   const id = useParams().id;
   const [note, setNote] = useState([]);
   const [text, setText] = useState('');
   useEffect(() => {
     const fetchNote = async () => {
+      setLoading(true);
+
       try {
         const response = await Axios.get(
           process.env.REACT_APP_BACKEND_URL + `/notes/${id}`,
@@ -50,6 +54,7 @@ export default function Jotting() {
       } catch (err) {
         console.log(err);
       }
+      setLoading(false);
     };
     fetchNote();
   }, [userData]);
@@ -120,4 +125,6 @@ export default function Jotting() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default LoadingWrapper(Jotting, 'Loading List...');
