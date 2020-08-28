@@ -9,20 +9,6 @@ export const LoadingWrapper = (WrappedComponent, loadingMessage) => {
       setLoading(isComponentLoading);
     };
 
-    if (isLoading) {
-      return (
-        <div id='mainCont'>
-          <Typography variant='h2' component='h2' gutterBottom>
-            {loadingMessage}
-          </Typography>
-          <div id='loadingSpin'></div>
-        </div>
-      );
-    } else {
-      return <WrappedComponent {...props} setLoading={setLoadingState} />;
-    }
-
-    /*
     return (
       <>
         {isLoading && (
@@ -33,11 +19,9 @@ export const LoadingWrapper = (WrappedComponent, loadingMessage) => {
             <div id='loadingSpin'></div>
           </div>
         )}
-        {!isLoading && (
-          <WrappedComponent {...props} setLoading={setLoadingState} />
-        )}
+        <WrappedComponent {...props} setLoading={setLoadingState} />
       </>
-    );*/
+    );
   };
 
   return HOC;

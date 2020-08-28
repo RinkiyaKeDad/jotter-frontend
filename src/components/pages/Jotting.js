@@ -127,4 +127,4 @@ export const Jotting = props => {
   );
 };
 
-export default LoadingWrapper(Jotting, 'Loading List...');
+export default LoadingWrapper(Jotting, 'Loading');
