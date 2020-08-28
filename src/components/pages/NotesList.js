@@ -121,4 +121,4 @@ export const NotesList = props => {
   );
 };
 
-export default LoadingWrapper(NotesList, 'Loading List...');
+export default LoadingWrapper(NotesList, 'Loading');
