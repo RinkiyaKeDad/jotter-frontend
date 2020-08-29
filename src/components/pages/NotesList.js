@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
@@ -16,21 +15,11 @@ import UserContext from '../context/UserContext';
 import LoadingWrapper from '../utils/LoadingWrapper';
 import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  typographyStyles: {
-    flex: 1,
-  },
-  header: {
-    color: 'white',
-  },
-}));
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
 export const NotesList = props => {
-  const classes = useStyles();
   const { userData } = useContext(UserContext);
   const [notes, setNotes] = useState([]);
   const [notif, setNotif] = useState(undefined);
