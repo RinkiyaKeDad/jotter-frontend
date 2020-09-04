@@ -11,6 +11,7 @@ export const LoadingWrapper = (WrappedComponent, loadingMessage) => {
 
     return (
       <>
+        <WrappedComponent {...props} setLoading={setLoadingState} />
         {isLoading && (
           <div id='mainCont'>
             <Typography variant='h2' component='h2' gutterBottom>
@@ -19,7 +20,6 @@ export const LoadingWrapper = (WrappedComponent, loadingMessage) => {
             <div id='loadingSpin'></div>
           </div>
         )}
-        <WrappedComponent {...props} setLoading={setLoadingState} />
       </>
     );
   };
