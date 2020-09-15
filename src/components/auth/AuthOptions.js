@@ -18,6 +18,7 @@ export default function Authoptions() {
       user: undefined,
     });
     sessionStorage.setItem('auth-token', '');
+    history.push('/login');
   };
   return (
     <div>
